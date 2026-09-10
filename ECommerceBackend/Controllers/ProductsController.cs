@@ -18,12 +18,12 @@ public ProductsController(IProductService productService)
 
 [HttpGet]
 [Authorize]
-public IActionResult GetProducts(
+public async Task<IActionResult> GetProducts(
     [FromQuery] ProductSearchRequest request)
 {
     try
     {
-        return Ok(_productService.Search(request));
+        return Ok(await _productService.SearchAsync(request));
     }
     catch (ArgumentException ex)
     {
@@ -46,11 +46,11 @@ public IActionResult GetProducts(
 
 [HttpGet("filters")]
 [Authorize]
-public IActionResult GetFilterOptions()
+public async Task<IActionResult> GetFilterOptions()
 {
     try
     {
-        return Ok(_productService.GetFilterOptions());
+        return Ok(await _productService.GetFilterOptionsAsync());
     }
     catch (Exception)
     {
@@ -66,11 +66,11 @@ public IActionResult GetFilterOptions()
 
 [HttpGet("{id:int}")]
 [Authorize]
-public IActionResult GetProduct(int id)
+public async Task<IActionResult> GetProduct(int id)
 {
     try
     {
-        var product = _productService.GetById(id);
+        var product = await _productService.GetByIdAsync(id);
 
         return product == null
             ? NotFound(new
@@ -93,13 +93,13 @@ public IActionResult GetProduct(int id)
 
 [HttpPost]
 [Authorize(Roles = "Admin")]
-public IActionResult CreateProduct(
+public async Task<IActionResult> CreateProduct(
     ProductCreateDto dto)
 {
     try
     {
         var createdProduct =
-            _productService.Create(dto);
+            await _productService.CreateAsync(dto);
 
         return CreatedAtAction(
             nameof(GetProduct),
@@ -130,14 +130,14 @@ public IActionResult CreateProduct(
 
 [HttpPut("{id:int}")]
 [Authorize(Roles = "Admin")]
-public IActionResult UpdateProduct(
+public async Task<IActionResult> UpdateProduct(
     int id,
     ProductUpdateDto dto)
 {
     try
     {
         var updatedProduct =
-            _productService.Update(id, dto);
+            await _productService.UpdateAsync(id, dto);
 
         return updatedProduct == null
             ? NotFound(new
@@ -167,11 +167,11 @@ public IActionResult UpdateProduct(
 
 [HttpDelete("{id:int}")]
 [Authorize(Roles = "Admin")]
-public IActionResult DeleteProduct(int id)
+public async Task<IActionResult> DeleteProduct(int id)
 {
     try
     {
-        return _productService.Delete(id)
+        return await _productService.DeleteAsync(id)
             ? NoContent()
             : NotFound(new
             {
@@ -192,7 +192,7 @@ public IActionResult DeleteProduct(int id)
 
 [HttpPost("import-csv")]
 [Authorize(Roles = "Admin")]
-public IActionResult ImportCsv(IFormFile file)
+public async Task<IActionResult> ImportCsv(IFormFile file)
 {
     if (file == null || file.Length == 0)
     {
@@ -217,7 +217,7 @@ public IActionResult ImportCsv(IFormFile file)
         using var stream = file.OpenReadStream();
 
         var products =
-            _productService.ImportFromCsv(stream);
+            await _productService.ImportFromCsvAsync(stream);
 
         return Ok(new
         {

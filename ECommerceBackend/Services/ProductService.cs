@@ -16,14 +16,14 @@ public ProductService(IProductRepository repository)
     _repository = repository;
 }
 
-public List<ProductResponseDto> GetAll()
+public async Task<List<ProductResponseDto>> GetAllAsync()
 {
-    return _repository.GetAll()
+    return (await _repository.GetAllAsync())
         .Select(Map)
         .ToList();
 }
 
-public ProductSearchResponseDto Search(
+public async Task<ProductSearchResponseDto> SearchAsync(
     ProductSearchRequest request)
 {
     request.Page =
@@ -58,7 +58,7 @@ public ProductSearchResponseDto Search(
     }
 
     var result =
-        _repository.Search(request);
+        await _repository.SearchAsync(request);
 
     var totalPages =
         (int)Math.Ceiling(
@@ -71,7 +71,7 @@ public ProductSearchResponseDto Search(
         request.Page = totalPages;
 
         result =
-            _repository.Search(request);
+            await _repository.SearchAsync(request);
     }
 
     return new ProductSearchResponseDto
@@ -95,22 +95,22 @@ public ProductSearchResponseDto Search(
     };
 }
 
-public ProductFilterOptionsDto GetFilterOptions()
+public Task<ProductFilterOptionsDto> GetFilterOptionsAsync()
 {
-    return _repository.GetFilterOptions();
+    return _repository.GetFilterOptionsAsync();
 }
 
-public ProductResponseDto? GetById(int id)
+public async Task<ProductResponseDto?> GetByIdAsync(int id)
 {
     var product =
-        _repository.GetById(id);
+        await _repository.GetByIdAsync(id);
 
     return product == null
         ? null
         : Map(product);
 }
 
-public ProductResponseDto Create(
+public async Task<ProductResponseDto> CreateAsync(
     ProductCreateDto dto)
 {
     ValidateProduct(
@@ -150,10 +150,10 @@ public ProductResponseDto Create(
     };
 
     return Map(
-        _repository.Create(product));
+        await _repository.CreateAsync(product));
 }
 
-public ProductResponseDto? Update(
+public async Task<ProductResponseDto?> UpdateAsync(
     int id,
     ProductUpdateDto dto)
 {
@@ -164,7 +164,7 @@ public ProductResponseDto? Update(
         dto.StockQuantity);
 
     var existingProduct =
-        _repository.GetById(id);
+        await _repository.GetByIdAsync(id);
 
     if (existingProduct == null)
     {
@@ -196,7 +196,7 @@ public ProductResponseDto? Update(
         ?? string.Empty;
 
     var updatedProduct =
-        _repository.Update(
+        await _repository.UpdateAsync(
             id,
             existingProduct);
 
@@ -205,12 +205,12 @@ public ProductResponseDto? Update(
         : Map(updatedProduct);
 }
 
-public bool Delete(int id)
+public Task<bool> DeleteAsync(int id)
 {
-    return _repository.Delete(id);
+    return _repository.DeleteAsync(id);
 }
 
-public List<ProductResponseDto> ImportFromCsv(
+public async Task<List<ProductResponseDto>> ImportFromCsvAsync(
     Stream csvStream)
 {
     using var reader =
@@ -275,7 +275,7 @@ public List<ProductResponseDto> ImportFromCsv(
 
         importedProducts.Add(
             Map(
-                _repository.Create(product)
+                await _repository.CreateAsync(product)
             )
         );
     }

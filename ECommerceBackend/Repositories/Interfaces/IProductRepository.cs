@@ -5,17 +5,17 @@ namespace ECommerceBackend.Repositories.Interfaces;
 
 public interface IProductRepository
 {
-    List<Product> GetAll();
+    Task<List<Product>> GetAllAsync();
 
-    ProductSearchResult Search(ProductSearchRequest request);
+    Task<ProductSearchResult> SearchAsync(ProductSearchRequest request);
 
-    ProductFilterOptionsDto GetFilterOptions();
+    Task<ProductFilterOptionsDto> GetFilterOptionsAsync();
 
-    Product? GetById(int id);
+    Task<Product?> GetByIdAsync(int id);
 
-    Product Create(Product product);
+    Task<Product> CreateAsync(Product product);
 
-    Product? Update(int id, Product product);
+    Task<Product?> UpdateAsync(int id, Product product);
 
-    bool Delete(int id);
+    Task<bool> DeleteAsync(int id);
 }

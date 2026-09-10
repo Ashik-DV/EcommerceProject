@@ -4,18 +4,18 @@ namespace ECommerceBackend.Services.Interfaces;
 
 public interface ICartService
 {
-CartResponseDto GetCart(int userId);
+Task<CartResponseDto> GetCartAsync(int userId);
 
-CartResponseDto AddToCart(int userId, AddToCartDto dto);
+Task<CartResponseDto> AddToCartAsync(int userId, AddToCartDto dto);
 
-CartResponseDto UpdateCartItem(
+Task<CartResponseDto> UpdateCartItemAsync(
     int userId,
     int cartItemId,
     UpdateCartItemDto dto
 );
 
-bool RemoveCartItem(int userId, int cartItemId);
+Task<bool> RemoveCartItemAsync(int userId, int cartItemId);
 
-bool ClearCart(int userId);
+Task<bool> ClearCartAsync(int userId);
 
 }

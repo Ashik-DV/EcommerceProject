@@ -4,7 +4,7 @@ namespace ECommerceBackend.Services.Interfaces;
 
 public interface IAuthService
 {
-    LoginResponseDto Register(RegisterDto dto);
+    Task<LoginResponseDto> RegisterAsync(RegisterDto dto);
 
-    LoginResponseDto Login(LoginDto dto);
+    Task<LoginResponseDto> LoginAsync(LoginDto dto);
 }

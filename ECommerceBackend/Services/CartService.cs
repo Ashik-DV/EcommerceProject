@@ -22,10 +22,10 @@ public CartService(
 // GET CART
 // ======================================================
 
-public CartResponseDto GetCart(int userId)
+public async Task<CartResponseDto> GetCartAsync(int userId)
 {
     var cart =
-        _cartRepository.GetCartByUserId(userId);
+        await _cartRepository.GetCartByUserIdAsync(userId);
 
     if (cart == null)
     {
@@ -46,12 +46,12 @@ public CartResponseDto GetCart(int userId)
 // ADD TO CART
 // ======================================================
 
-public CartResponseDto AddToCart(
+public async Task<CartResponseDto> AddToCartAsync(
     int userId,
     AddToCartDto dto)
 {
     var product =
-        _productRepository.GetById(dto.ProductId);
+        await _productRepository.GetByIdAsync(dto.ProductId);
 
     if (product == null)
     {
@@ -71,7 +71,7 @@ public CartResponseDto AddToCart(
     }
 
     var cart =
-        _cartRepository.GetCartByUserId(userId);
+        await _cartRepository.GetCartByUserIdAsync(userId);
 
     if (cart == null)
     {
@@ -81,11 +81,11 @@ public CartResponseDto AddToCart(
         };
 
         cart =
-            _cartRepository.CreateCart(cart);
+            await _cartRepository.CreateCartAsync(cart);
     }
 
     var existingCartItem =
-        _cartRepository.GetCartItemByProductId(
+        await _cartRepository.GetCartItemByProductIdAsync(
             userId,
             dto.ProductId
         );
@@ -105,7 +105,7 @@ public CartResponseDto AddToCart(
         existingCartItem.Quantity =
             newQuantity;
 
-        _cartRepository.UpdateCartItem(
+        await _cartRepository.UpdateCartItemAsync(
             existingCartItem
         );
     }
@@ -118,13 +118,13 @@ public CartResponseDto AddToCart(
             Quantity = dto.Quantity
         };
 
-        _cartRepository.AddCartItem(
+        await _cartRepository.AddCartItemAsync(
             cartItem
         );
     }
 
     var updatedCart =
-        _cartRepository.GetCartByUserId(userId);
+        await _cartRepository.GetCartByUserIdAsync(userId);
 
     return MapCartToDto(updatedCart!);
 }
@@ -133,13 +133,13 @@ public CartResponseDto AddToCart(
 // UPDATE CART ITEM
 // ======================================================
 
-public CartResponseDto UpdateCartItem(
+public async Task<CartResponseDto> UpdateCartItemAsync(
     int userId,
     int cartItemId,
     UpdateCartItemDto dto)
 {
     var cartItem =
-        _cartRepository.GetCartItem(
+        await _cartRepository.GetCartItemAsync(
             cartItemId,
             userId
         );
@@ -168,12 +168,12 @@ public CartResponseDto UpdateCartItem(
     cartItem.Quantity =
         dto.Quantity;
 
-    _cartRepository.UpdateCartItem(
+    await _cartRepository.UpdateCartItemAsync(
         cartItem
     );
 
     var updatedCart =
-        _cartRepository.GetCartByUserId(userId);
+        await _cartRepository.GetCartByUserIdAsync(userId);
 
     return MapCartToDto(updatedCart!);
 }
@@ -182,12 +182,12 @@ public CartResponseDto UpdateCartItem(
 // REMOVE CART ITEM
 // ======================================================
 
-public bool RemoveCartItem(
+public async Task<bool> RemoveCartItemAsync(
     int userId,
     int cartItemId)
 {
     var cartItem =
-        _cartRepository.GetCartItem(
+        await _cartRepository.GetCartItemAsync(
             cartItemId,
             userId
         );
@@ -198,7 +198,7 @@ public bool RemoveCartItem(
     }
 
     var removed =
-        _cartRepository.RemoveCartItem(
+        await _cartRepository.RemoveCartItemAsync(
             cartItem
         );
 
@@ -209,10 +209,10 @@ public bool RemoveCartItem(
 // CLEAR CART
 // ======================================================
 
-public bool ClearCart(int userId)
+public async Task<bool> ClearCartAsync(int userId)
 {
     var cart =
-        _cartRepository.GetCartByUserId(userId);
+        await _cartRepository.GetCartByUserIdAsync(userId);
 
     if (cart == null)
     {
@@ -220,7 +220,7 @@ public bool ClearCart(int userId)
     }
 
     var cleared =
-        _cartRepository.ClearCart(cart);
+        await _cartRepository.ClearCartAsync(cart);
 
     return cleared;
 }

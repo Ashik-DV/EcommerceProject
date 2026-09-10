@@ -26,10 +26,10 @@ public AuthService(
 // REGISTER
 // ======================================================
 
-public LoginResponseDto Register(RegisterDto dto)
+public async Task<LoginResponseDto> RegisterAsync(RegisterDto dto)
 {
     var existingUser =
-        _userRepository.GetByEmail(dto.Email);
+        await _userRepository.GetByEmailAsync(dto.Email);
 
     if (existingUser != null)
     {
@@ -46,7 +46,7 @@ public LoginResponseDto Register(RegisterDto dto)
     };
 
     var createdUser =
-        _userRepository.Create(user);
+        await _userRepository.CreateAsync(user);
 
     var token =
         _jwtHelper.GenerateToken(createdUser);
@@ -65,10 +65,10 @@ public LoginResponseDto Register(RegisterDto dto)
 // LOGIN
 // ======================================================
 
-public LoginResponseDto Login(LoginDto dto)
+public async Task<LoginResponseDto> LoginAsync(LoginDto dto)
 {
     var user =
-        _userRepository.GetByEmail(dto.Email);
+        await _userRepository.GetByEmailAsync(dto.Email);
 
     if (user == null)
     {

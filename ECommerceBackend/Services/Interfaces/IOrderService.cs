@@ -4,28 +4,28 @@ namespace ECommerceBackend.Services.Interfaces;
 
 public interface IOrderService
 {
-OrderCreateResponseDto CreateOrder(
+Task<OrderCreateResponseDto> CreateOrderAsync(
 int userId,
 OrderCreateDto dto
 );
 
-bool VerifyPayment(
+Task<bool> VerifyPaymentAsync(
     int userId,
     FakePaymentDto dto
 );
 
-List<OrderResponseDto> GetMyOrders(
+Task<List<OrderResponseDto>> GetMyOrdersAsync(
     int userId
 );
 
-OrderResponseDto? GetMyOrderById(
+Task<OrderResponseDto?> GetMyOrderByIdAsync(
     int userId,
     int orderId
 );
 
-List<OrderResponseDto> GetAllOrders();
+Task<List<OrderResponseDto>> GetAllOrdersAsync();
 
-OrderResponseDto? GetOrderByIdForAdmin(
+Task<OrderResponseDto?> GetOrderByIdForAdminAsync(
     int orderId
 );
 

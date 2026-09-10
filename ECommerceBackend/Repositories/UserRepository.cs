@@ -1,6 +1,7 @@
 using ECommerceBackend.Data;
 using ECommerceBackend.Models;
 using ECommerceBackend.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceBackend.Repositories;
 
@@ -17,11 +18,11 @@ public UserRepository(AppDbContext context)
 // GET USER BY EMAIL
 // ======================================================
 
-public User? GetByEmail(string email)
+public async Task<User?> GetByEmailAsync(string email)
 {
     var user =
-        _context.Users
-            .FirstOrDefault(x => x.Email == email);
+        await _context.Users
+            .FirstOrDefaultAsync(x => x.Email == email);
 
     return user;
 }
@@ -30,11 +31,11 @@ public User? GetByEmail(string email)
 // CREATE USER
 // ======================================================
 
-public User Create(User user)
+public async Task<User> CreateAsync(User user)
 {
     _context.Users.Add(user);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return user;
 }

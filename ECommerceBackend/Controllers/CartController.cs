@@ -26,13 +26,13 @@ public CartController(ICartService cartService)
 // ======================================================
 
 [HttpGet]
-public IActionResult GetCart()
+public async Task<IActionResult> GetCart()
 {
     try
     {
         var userId = GetUserId();
 
-        var cart = _cartService.GetCart(userId);
+        var cart = await _cartService.GetCartAsync(userId);
 
         return Ok(cart);
     }
@@ -58,14 +58,14 @@ public IActionResult GetCart()
 // ======================================================
 
 [HttpPost]
-public IActionResult AddToCart(
+public async Task<IActionResult> AddToCart(
     [FromBody] AddToCartDto dto)
 {
     try
     {
         var userId = GetUserId();
 
-        var cart = _cartService.AddToCart(
+        var cart = await _cartService.AddToCartAsync(
             userId,
             dto
         );
@@ -94,7 +94,7 @@ public IActionResult AddToCart(
 // ======================================================
 
 [HttpPut("{cartItemId}")]
-public IActionResult UpdateCartItem(
+public async Task<IActionResult> UpdateCartItem(
     int cartItemId,
     [FromBody] UpdateCartItemDto dto)
 {
@@ -102,7 +102,7 @@ public IActionResult UpdateCartItem(
     {
         var userId = GetUserId();
 
-        var cart = _cartService.UpdateCartItem(
+        var cart = await _cartService.UpdateCartItemAsync(
             userId,
             cartItemId,
             dto
@@ -132,14 +132,14 @@ public IActionResult UpdateCartItem(
 // ======================================================
 
 [HttpDelete("{cartItemId}")]
-public IActionResult RemoveCartItem(
+public async Task<IActionResult> RemoveCartItem(
     int cartItemId)
 {
     try
     {
         var userId = GetUserId();
 
-        var removed = _cartService.RemoveCartItem(
+        var removed = await _cartService.RemoveCartItemAsync(
             userId,
             cartItemId
         );
@@ -179,13 +179,13 @@ public IActionResult RemoveCartItem(
 // ======================================================
 
 [HttpDelete]
-public IActionResult ClearCart()
+public async Task<IActionResult> ClearCart()
 {
     try
     {
         var userId = GetUserId();
 
-        var cleared = _cartService.ClearCart(userId);
+        var cleared = await _cartService.ClearCartAsync(userId);
 
         return Ok(new
         {

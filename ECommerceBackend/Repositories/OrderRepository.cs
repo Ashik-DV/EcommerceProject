@@ -18,12 +18,12 @@ public OrderRepository(AppDbContext context)
 // CREATE ORDER
 // ======================================================
 
-public Order Create(
+public async Task<Order> CreateAsync(
     Order order)
 {
     _context.Orders.Add(order);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return order;
 }
@@ -32,12 +32,12 @@ public Order Create(
 // UPDATE ORDER
 // ======================================================
 
-public Order Update(
+public async Task<Order> UpdateAsync(
     Order order)
 {
     _context.Orders.Update(order);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return order;
 }
@@ -46,7 +46,7 @@ public Order Update(
 // GET USER ORDERS
 // ======================================================
 
-public List<Order> GetByUserId(
+public async Task<List<Order>> GetByUserIdAsync(
     int userId)
 {
     var orders =
@@ -55,16 +55,16 @@ public List<Order> GetByUserId(
                 .ThenInclude(oi => oi.Product)
             .Where(o => o.UserId == userId)
             .OrderByDescending(o => o.Id)
-            .ToList();
+            .ToListAsync();
 
-    return orders;
+    return await orders;
 }
 
 // ======================================================
 // GET SINGLE USER ORDER
 // ======================================================
 
-public Order? GetById(
+public async Task<Order?> GetByIdAsync(
     int id,
     int userId)
 {
@@ -72,47 +72,47 @@ public Order? GetById(
         _context.Orders
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
-            .FirstOrDefault(
+            .FirstOrDefaultAsync(
                 o =>
                     o.Id == id &&
                     o.UserId == userId
             );
 
-    return order;
+    return await order;
 }
 
 // ======================================================
 // GET ALL ORDERS - ADMIN
 // ======================================================
 
-public List<Order> GetAll()
+public async Task<List<Order>> GetAllAsync()
 {
     var orders =
         _context.Orders
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
             .OrderByDescending(o => o.Id)
-            .ToList();
+            .ToListAsync();
 
-    return orders;
+    return await orders;
 }
 
 // ======================================================
 // GET SINGLE ORDER - ADMIN
 // ======================================================
 
-public Order? GetByIdForAdmin(
+public async Task<Order?> GetByIdForAdminAsync(
     int id)
 {
     var order =
         _context.Orders
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
-            .FirstOrDefault(
+            .FirstOrDefaultAsync(
                 o => o.Id == id
             );
 
-    return order;
+    return await order;
 }
 
 }

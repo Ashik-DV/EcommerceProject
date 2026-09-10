@@ -4,26 +4,26 @@ namespace ECommerceBackend.Repositories.Interfaces;
 
 public interface IOrderRepository
 {
-Order Create(
+Task<Order> CreateAsync(
 Order order
 );
 
-Order Update(
+Task<Order> UpdateAsync(
     Order order
 );
 
-List<Order> GetByUserId(
+Task<List<Order>> GetByUserIdAsync(
     int userId
 );
 
-Order? GetById(
+Task<Order?> GetByIdAsync(
     int id,
     int userId
 );
 
-List<Order> GetAll();
+Task<List<Order>> GetAllAsync();
 
-Order? GetByIdForAdmin(
+Task<Order?> GetByIdForAdminAsync(
     int id
 );
 

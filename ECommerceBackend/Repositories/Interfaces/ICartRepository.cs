@@ -4,20 +4,20 @@ namespace ECommerceBackend.Repositories.Interfaces;
 
 public interface ICartRepository
 {
-Cart? GetCartByUserId(int userId);
+Task<Cart?> GetCartByUserIdAsync(int userId);
 
-Cart CreateCart(Cart cart);
+Task<Cart> CreateCartAsync(Cart cart);
 
-CartItem? GetCartItem(int cartItemId, int userId);
+Task<CartItem?> GetCartItemAsync(int cartItemId, int userId);
 
-CartItem? GetCartItemByProductId(int userId, int productId);
+Task<CartItem?> GetCartItemByProductIdAsync(int userId, int productId);
 
-CartItem AddCartItem(CartItem cartItem);
+Task<CartItem> AddCartItemAsync(CartItem cartItem);
 
-CartItem UpdateCartItem(CartItem cartItem);
+Task<CartItem> UpdateCartItemAsync(CartItem cartItem);
 
-bool RemoveCartItem(CartItem cartItem);
+Task<bool> RemoveCartItemAsync(CartItem cartItem);
 
-bool ClearCart(Cart cart);
+Task<bool> ClearCartAsync(Cart cart);
 
 }

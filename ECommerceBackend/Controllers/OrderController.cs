@@ -50,7 +50,7 @@ private int GetUserId()
 // ======================================================
 
 [HttpPost("checkout")]
-public IActionResult Checkout(
+public async Task<IActionResult> Checkout(
     [FromBody] OrderCreateDto dto)
 {
     try
@@ -59,7 +59,7 @@ public IActionResult Checkout(
             GetUserId();
 
         var order =
-            _orderService.CreateOrder(
+            await _orderService.CreateOrderAsync(
                 userId,
                 dto
             );
@@ -106,7 +106,7 @@ public IActionResult Checkout(
 // ======================================================
 
 [HttpPost("verify-payment")]
-public IActionResult VerifyPayment(
+public async Task<IActionResult> VerifyPayment(
     [FromBody] FakePaymentDto dto)
 {
     try
@@ -115,7 +115,7 @@ public IActionResult VerifyPayment(
             GetUserId();
 
         var isVerified =
-            _orderService.VerifyPayment(
+            await _orderService.VerifyPaymentAsync(
                 userId,
                 dto
             );
@@ -188,7 +188,7 @@ public IActionResult VerifyPayment(
 // ======================================================
 
 [HttpGet]
-public IActionResult GetMyOrders()
+public async Task<IActionResult> GetMyOrders()
 {
     try
     {
@@ -196,7 +196,7 @@ public IActionResult GetMyOrders()
             GetUserId();
 
         var orders =
-            _orderService.GetMyOrders(
+            await _orderService.GetMyOrdersAsync(
                 userId
             );
 
@@ -234,7 +234,7 @@ public IActionResult GetMyOrders()
 // ======================================================
 
 [HttpGet("{id:int}")]
-public IActionResult GetMyOrderById(
+public async Task<IActionResult> GetMyOrderById(
     int id)
 {
     try
@@ -243,7 +243,7 @@ public IActionResult GetMyOrderById(
             GetUserId();
 
         var order =
-            _orderService.GetMyOrderById(
+            await _orderService.GetMyOrderByIdAsync(
                 userId,
                 id
             );
@@ -294,12 +294,12 @@ public IActionResult GetMyOrderById(
 
 [HttpGet("all")]
 [Authorize(Roles = "Admin")]
-public IActionResult GetAllOrders()
+public async Task<IActionResult> GetAllOrders()
 {
     try
     {
         var orders =
-            _orderService.GetAllOrders();
+            await _orderService.GetAllOrdersAsync();
 
         return Ok(
             orders
@@ -326,13 +326,13 @@ public IActionResult GetAllOrders()
 
 [HttpGet("admin/{id:int}")]
 [Authorize(Roles = "Admin")]
-public IActionResult GetOrderByIdForAdmin(
+public async Task<IActionResult> GetOrderByIdForAdmin(
     int id)
 {
     try
     {
         var order =
-            _orderService.GetOrderByIdForAdmin(
+            await _orderService.GetOrderByIdForAdminAsync(
                 id
             );
 

@@ -26,12 +26,12 @@ public OrderService(
 // CREATE ORDER
 // ======================================================
 
-public OrderCreateResponseDto CreateOrder(
+public async Task<OrderCreateResponseDto> CreateOrderAsync(
     int userId,
     OrderCreateDto dto)
 {
     var cart =
-        _cartRepository.GetCartByUserId(
+        await _cartRepository.GetCartByUserIdAsync(
             userId
         );
 
@@ -147,7 +147,7 @@ public OrderCreateResponseDto CreateOrder(
     // ==================================================
 
     var createdOrder =
-        _orderRepository.Create(
+        await _orderRepository.CreateAsync(
             order
         );
 
@@ -170,7 +170,7 @@ public OrderCreateResponseDto CreateOrder(
     createdOrder.PaymentOrderId =
         paymentOrderId;
 
-    _orderRepository.Update(
+    await _orderRepository.UpdateAsync(
         createdOrder
     );
 
@@ -200,7 +200,7 @@ public OrderCreateResponseDto CreateOrder(
 // VERIFY PAYMENT
 // ======================================================
 
-public bool VerifyPayment(
+public async Task<bool> VerifyPaymentAsync(
     int userId,
     FakePaymentDto dto)
 {
@@ -209,7 +209,7 @@ public bool VerifyPayment(
     // ==================================================
 
     var order =
-        _orderRepository.GetById(
+        await _orderRepository.GetByIdAsync(
             dto.OrderId,
             userId
         );
@@ -279,7 +279,7 @@ public bool VerifyPayment(
     // ==================================================
 
     var cart =
-        _cartRepository.GetCartByUserId(
+        await _cartRepository.GetCartByUserIdAsync(
             userId
         );
 
@@ -353,7 +353,7 @@ public bool VerifyPayment(
     // Update Order
     // ==================================================
 
-    _orderRepository.Update(
+    await _orderRepository.UpdateAsync(
         order
     );
 
@@ -362,7 +362,7 @@ public bool VerifyPayment(
     // Clear Cart
     // ==================================================
 
-    _cartRepository.ClearCart(
+    await _cartRepository.ClearCartAsync(
         cart
     );
 
@@ -374,11 +374,11 @@ public bool VerifyPayment(
 // GET MY ORDERS
 // ======================================================
 
-public List<OrderResponseDto> GetMyOrders(
+public async Task<List<OrderResponseDto>> GetMyOrdersAsync(
     int userId)
 {
     var orders =
-        _orderRepository.GetByUserId(
+        await _orderRepository.GetByUserIdAsync(
             userId
         );
 
@@ -392,12 +392,12 @@ public List<OrderResponseDto> GetMyOrders(
 // GET MY ORDER BY ID
 // ======================================================
 
-public OrderResponseDto? GetMyOrderById(
+public async Task<OrderResponseDto?> GetMyOrderByIdAsync(
     int userId,
     int orderId)
 {
     var order =
-        _orderRepository.GetById(
+        await _orderRepository.GetByIdAsync(
             orderId,
             userId
         );
@@ -417,10 +417,10 @@ public OrderResponseDto? GetMyOrderById(
 // GET ALL ORDERS - ADMIN
 // ======================================================
 
-public List<OrderResponseDto> GetAllOrders()
+public async Task<List<OrderResponseDto>> GetAllOrdersAsync()
 {
     var orders =
-        _orderRepository.GetAll();
+        await _orderRepository.GetAllAsync();
 
     return orders
         .Select(MapToDto)
@@ -432,11 +432,11 @@ public List<OrderResponseDto> GetAllOrders()
 // GET ORDER BY ID - ADMIN
 // ======================================================
 
-public OrderResponseDto? GetOrderByIdForAdmin(
+public async Task<OrderResponseDto?> GetOrderByIdForAdminAsync(
     int orderId)
 {
     var order =
-        _orderRepository.GetByIdForAdmin(
+        await _orderRepository.GetByIdForAdminAsync(
             orderId
         );
 

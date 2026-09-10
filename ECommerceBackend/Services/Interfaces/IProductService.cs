@@ -4,19 +4,19 @@ namespace ECommerceBackend.Services.Interfaces;
 
 public interface IProductService
 {
-    List<ProductResponseDto> GetAll();
+    Task<List<ProductResponseDto>> GetAllAsync();
 
-    ProductSearchResponseDto Search(ProductSearchRequest request);
+    Task<ProductSearchResponseDto> SearchAsync(ProductSearchRequest request);
 
-    ProductFilterOptionsDto GetFilterOptions();
+    Task<ProductFilterOptionsDto> GetFilterOptionsAsync();
 
-    ProductResponseDto? GetById(int id);
+    Task<ProductResponseDto?> GetByIdAsync(int id);
 
-    ProductResponseDto Create(ProductCreateDto dto);
+    Task<ProductResponseDto> CreateAsync(ProductCreateDto dto);
 
-    ProductResponseDto? Update(int id, ProductUpdateDto dto);
+    Task<ProductResponseDto?> UpdateAsync(int id, ProductUpdateDto dto);
 
-    bool Delete(int id);
+    Task<bool> DeleteAsync(int id);
 
-    List<ProductResponseDto> ImportFromCsv(Stream csvStream);
+    Task<List<ProductResponseDto>> ImportFromCsvAsync(Stream csvStream);
 }

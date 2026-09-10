@@ -18,26 +18,26 @@ public CartRepository(AppDbContext context)
 // GET CART BY USER ID
 // ======================================================
 
-public Cart? GetCartByUserId(int userId)
+public async Task<Cart?> GetCartByUserIdAsync(int userId)
 {
     var cart =
         _context.Carts
             .Include(c => c.CartItems)
             .ThenInclude(ci => ci.Product)
-            .FirstOrDefault(c => c.UserId == userId);
+            .FirstOrDefaultAsync(c => c.UserId == userId);
 
-    return cart;
+    return await cart;
 }
 
 // ======================================================
 // CREATE CART
 // ======================================================
 
-public Cart CreateCart(Cart cart)
+public async Task<Cart> CreateCartAsync(Cart cart)
 {
     _context.Carts.Add(cart);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return cart;
 }
@@ -46,7 +46,7 @@ public Cart CreateCart(Cart cart)
 // GET CART ITEM
 // ======================================================
 
-public CartItem? GetCartItem(
+public async Task<CartItem?> GetCartItemAsync(
     int cartItemId,
     int userId)
 {
@@ -54,19 +54,19 @@ public CartItem? GetCartItem(
         _context.CartItems
             .Include(ci => ci.Cart)
             .Include(ci => ci.Product)
-            .FirstOrDefault(ci =>
+            .FirstOrDefaultAsync(ci =>
                 ci.Id == cartItemId &&
                 ci.Cart != null &&
                 ci.Cart.UserId == userId);
 
-    return cartItem;
+    return await cartItem;
 }
 
 // ======================================================
 // GET CART ITEM BY PRODUCT ID
 // ======================================================
 
-public CartItem? GetCartItemByProductId(
+public async Task<CartItem?> GetCartItemByProductIdAsync(
     int userId,
     int productId)
 {
@@ -74,24 +74,24 @@ public CartItem? GetCartItemByProductId(
         _context.CartItems
             .Include(ci => ci.Cart)
             .Include(ci => ci.Product)
-            .FirstOrDefault(ci =>
+            .FirstOrDefaultAsync(ci =>
                 ci.ProductId == productId &&
                 ci.Cart != null &&
                 ci.Cart.UserId == userId);
 
-    return cartItem;
+    return await cartItem;
 }
 
 // ======================================================
 // ADD CART ITEM
 // ======================================================
 
-public CartItem AddCartItem(
+public async Task<CartItem> AddCartItemAsync(
     CartItem cartItem)
 {
     _context.CartItems.Add(cartItem);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return cartItem;
 }
@@ -100,12 +100,12 @@ public CartItem AddCartItem(
 // UPDATE CART ITEM
 // ======================================================
 
-public CartItem UpdateCartItem(
+public async Task<CartItem> UpdateCartItemAsync(
     CartItem cartItem)
 {
     _context.CartItems.Update(cartItem);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return cartItem;
 }
@@ -114,12 +114,12 @@ public CartItem UpdateCartItem(
 // REMOVE CART ITEM
 // ======================================================
 
-public bool RemoveCartItem(
+public async Task<bool> RemoveCartItemAsync(
     CartItem cartItem)
 {
     _context.CartItems.Remove(cartItem);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return true;
 }
@@ -128,7 +128,7 @@ public bool RemoveCartItem(
 // CLEAR CART
 // ======================================================
 
-public bool ClearCart(
+public async Task<bool> ClearCartAsync(
     Cart cart)
 {
     if (cart.CartItems.Count == 0)
@@ -139,7 +139,7 @@ public bool ClearCart(
     _context.CartItems.RemoveRange(
         cart.CartItems);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return true;
 }

@@ -21,11 +21,11 @@ public AuthController(IAuthService authService)
 // ======================================================
 
 [HttpPost("register")]
-public IActionResult Register(RegisterDto dto)
+public async Task<IActionResult> Register(RegisterDto dto)
 {
     try
     {
-        var result = _authService.Register(dto);
+        var result = await _authService.RegisterAsync(dto);
 
         return Ok(result);
     }
@@ -44,11 +44,11 @@ public IActionResult Register(RegisterDto dto)
 // ======================================================
 
 [HttpPost("login")]
-public IActionResult Login(LoginDto dto)
+public async Task<IActionResult> Login(LoginDto dto)
 {
     try
     {
-        var result = _authService.Login(dto);
+        var result = await _authService.LoginAsync(dto);
         
 
         return Ok(result);

@@ -1,10 +1,11 @@
+
 using ECommerceBackend.Models;
 
 namespace ECommerceBackend.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    User? GetByEmail(string email);
+    Task<User?> GetByEmailAsync(string email);
 
-    User Create(User user);
+    Task<User> CreateAsync(User user);
 }

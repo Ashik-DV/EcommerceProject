@@ -370,7 +370,7 @@ Console.WriteLine(
 // Apply pending migrations
 // --------------------------------------------------
 
-dbContext.Database.Migrate();
+await dbContext.Database.MigrateAsync();
 
 Console.WriteLine(
     "Database migration completed.");
@@ -390,7 +390,7 @@ const string adminPassword =
 // --------------------------------------------------
 
 var adminExists =
-    dbContext.Users.Any(
+    await dbContext.Users.AnyAsync(
         u =>
             u.Email ==
             adminEmail);
@@ -425,7 +425,7 @@ if (!adminExists)
 
     dbContext.Users.Add(admin);
 
-    dbContext.SaveChanges();
+    await dbContext.SaveChangesAsync();
 
     Console.WriteLine(
         "Default admin user created.");

@@ -21,17 +21,17 @@ public ProductRepository(AppDbContext context)
     _context = context;
 }
 
-public List<Product> GetAll()
+public async Task<List<Product>> GetAllAsync()
 {
     var products = _context.Products
         .AsNoTracking()
         .OrderByDescending(p => p.Id)
-        .ToList();
+        .ToListAsync();
 
-    return products;
+    return await products;
 }
 
-public ProductSearchResult Search(
+public async Task<ProductSearchResult> SearchAsync(
     ProductSearchRequest request)
 {
     var query = _context.Products
@@ -125,7 +125,7 @@ public ProductSearchResult Search(
             query.OrderByDescending(p => p.Id)
     };
 
-    var totalCount = query.Count();
+    var totalCount = await query.CountAsync();
 
     var page =
         request.Page < 1
@@ -137,10 +137,10 @@ public ProductSearchResult Search(
             ? 12
             : request.PageSize;
 
-    var products = query
+    var products = await query
         .Skip((page - 1) * pageSize)
         .Take(pageSize)
-        .ToList();
+        .ToListAsync();
 
     return new ProductSearchResult
     {
@@ -149,23 +149,23 @@ public ProductSearchResult Search(
     };
 }
 
-public ProductFilterOptionsDto GetFilterOptions()
+public async Task<ProductFilterOptionsDto> GetFilterOptionsAsync()
 {
-    var categories = _context.Products
+    var categories = await _context.Products
         .AsNoTracking()
         .Where(p => p.Category != "")
         .Select(p => p.Category)
         .Distinct()
         .OrderBy(x => x)
-        .ToList();
+        .ToListAsync();
 
-    var brands = _context.Products
+    var brands = await _context.Products
         .AsNoTracking()
         .Where(p => p.Brand != "")
         .Select(p => p.Brand)
         .Distinct()
         .OrderBy(x => x)
-        .ToList();
+        .ToListAsync();
 
     return new ProductFilterOptionsDto
     {
@@ -174,30 +174,30 @@ public ProductFilterOptionsDto GetFilterOptions()
     };
 }
 
-public Product? GetById(int id)
+public async Task<Product?> GetByIdAsync(int id)
 {
-    var product = _context.Products
-        .FirstOrDefault(p => p.Id == id);
+    var product = await _context.Products
+        .FirstOrDefaultAsync(p => p.Id == id);
 
     return product;
 }
 
-public Product Create(Product product)
+public async Task<Product> CreateAsync(Product product)
 {
     _context.Products.Add(product);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return product;
 }
 
-public Product? Update(
+public async Task<Product?> UpdateAsync(
     int id,
     Product product)
 {
     var existingProduct =
-        _context.Products
-            .FirstOrDefault(p => p.Id == id);
+        await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == id);
 
     if (existingProduct == null)
     {
@@ -212,16 +212,16 @@ public Product? Update(
     existingProduct.StockQuantity = product.StockQuantity;
     existingProduct.ImageUrl = product.ImageUrl;
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return existingProduct;
 }
 
-public bool Delete(int id)
+public async Task<bool> DeleteAsync(int id)
 {
     var product =
-        _context.Products
-            .FirstOrDefault(p => p.Id == id);
+        await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == id);
 
     if (product == null)
     {
@@ -229,9 +229,9 @@ public bool Delete(int id)
     }
 
     var cartItems =
-        _context.CartItems
+        await _context.CartItems
             .Where(ci => ci.ProductId == id)
-            .ToList();
+            .ToListAsync();
 
     if (cartItems.Count > 0)
     {
@@ -239,9 +239,9 @@ public bool Delete(int id)
     }
 
     var orderItems =
-        _context.OrderItems
+        await _context.OrderItems
             .Where(oi => oi.ProductId == id)
-            .ToList();
+            .ToListAsync();
 
     if (orderItems.Count > 0)
     {
@@ -250,7 +250,7 @@ public bool Delete(int id)
 
     _context.Products.Remove(product);
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return true;
 }
