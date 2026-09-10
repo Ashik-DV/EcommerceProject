@@ -1,0 +1,152 @@
+.about-page {
+    min-height: 100vh;
+    background: #f6f7f9;
+    color: #171717;
+}
+
+.about-container {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 72px 0 80px;
+}
+
+.about-hero {
+    max-width: 780px;
+    margin: 0 auto 58px;
+    text-align: center;
+}
+
+.about-eyebrow,
+.about-section-label {
+    display: inline-block;
+    color: #666;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.about-hero h1 {
+    margin: 14px 0 18px;
+    font-size: clamp(38px, 6vw, 62px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+}
+
+.about-hero p {
+    max-width: 680px;
+    margin: 0 auto;
+    color: #666;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.about-hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.about-primary-button,
+.about-secondary-button {
+    border: 0;
+    border-radius: 8px;
+    padding: 13px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.about-primary-button {
+    background: #171717;
+    color: #fff;
+}
+
+.about-secondary-button {
+    background: #fff;
+    color: #171717;
+    border: 1px solid #ddd;
+}
+
+.about-values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.about-card {
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .04);
+}
+
+.about-card-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    border-radius: 10px;
+    background: #f1f2f4;
+    font-weight: 800;
+}
+
+.about-card h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.about-card p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.about-story {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 60px;
+    margin-top: 58px;
+    padding: 40px;
+    background: #171717;
+    color: #fff;
+    border-radius: 16px;
+}
+
+.about-story h2 {
+    margin: 12px 0 0;
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+.about-story p {
+    margin: 0;
+    color: #d1d1d1;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+@media (max-width: 760px) {
+    .about-container {
+        width: min(100% - 24px, 1120px);
+        padding-top: 48px;
+    }
+
+    .about-values,
+    .about-story {
+        grid-template-columns: 1fr;
+    }
+
+    .about-hero-actions {
+        flex-direction: column;
+    }
+
+    .about-story {
+        gap: 24px;
+        padding: 28px;
+    }
+}

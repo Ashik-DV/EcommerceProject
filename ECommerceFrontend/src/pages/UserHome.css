@@ -1,0 +1,645 @@
+.user-home-page {
+min-height: 100vh;
+background: #f5f6f8;
+color: #222;
+}
+
+/* ======================================================
+HEADER
+====================================================== */
+
+.user-home-header {
+min-height: 94px;
+background: #ffffff;
+border-bottom: 1px solid #e5e5e5;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+padding: 0 32px;
+box-sizing: border-box;
+gap: 25px;
+
+}
+
+.user-home-header h1 {
+margin: 0;
+font-size: 28px;
+font-weight: 700;
+color: #1f2937;
+}
+
+.user-home-header p {
+margin: 5px 0 0;
+color: #6b7280;
+font-size: 15px;
+}
+
+/* ======================================================
+HEADER BUTTONS
+====================================================== */
+
+.btns { display: flex; align-items: center; justify-content: flex-end; gap: 15px; }
+
+/* Common button styling */
+
+.btns button {
+border: none;
+padding: 12px 20px;
+border-radius: 8px;
+
+font-size: 14px;
+font-weight: 600;
+
+cursor: pointer;
+transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+.btns button {
+transform: translateY(-1px);
+}
+
+/* Home button */
+
+.home-button {
+background: #f3f4f6;
+color: #222;
+}
+
+.home-button {
+background: #e5e7eb;
+}
+
+/* About button */
+
+.about-button {
+background: #f3f4f6;
+color: #222;
+}
+
+.about-button {
+background: #e5e7eb;
+}
+
+/* Logout */
+
+.logout-button {
+border: none;
+
+background: #222;
+color: #ffffff;
+
+padding: 12px 22px;
+
+border-radius: 8px;
+
+font-size: 14px;
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+.logout-button {
+background: #000;
+transform: translateY(-1px);
+}
+
+/* ======================================================
+MAIN CONTAINER
+====================================================== */
+
+.user-home-container {
+max-width: 1250px;
+
+margin: 55px auto;
+
+padding: 0 24px;
+
+display: grid;
+grid-template-columns: 1fr 1fr;
+
+gap: 28px;
+
+box-sizing: border-box;
+
+}
+
+/* ======================================================
+WELCOME CARD
+====================================================== */
+
+.welcome-card {
+min-height: 390px;
+
+background: #ffffff;
+
+border-radius: 18px;
+
+display: flex;
+flex-direction: column;
+
+align-items: center;
+justify-content: center;
+
+text-align: center;
+
+padding: 40px;
+
+box-sizing: border-box;
+
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+border: 1px solid #eeeeee;
+
+}
+
+.welcome-icon {
+font-size: 56px;
+margin-bottom: 18px;
+}
+
+.welcome-card h2 {
+margin: 0 0 15px;
+
+font-size: 30px;
+font-weight: 700;
+
+color: #1f2937;
+
+}
+
+.welcome-card p {
+max-width: 500px;
+
+margin: 0 0 30px;
+
+color: #666;
+
+font-size: 16px;
+line-height: 1.6;
+
+}
+
+/* ======================================================
+VIEW PRODUCTS BUTTON
+====================================================== */
+
+.view-products-button {
+border: none;
+
+background: #222;
+color: #ffffff;
+
+padding: 14px 28px;
+
+border-radius: 8px;
+
+font-size: 15px;
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+.view-products-button {
+background: #000;
+
+transform: translateY(-2px);
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+}
+
+/* ======================================================
+ADVERTISEMENT CARD
+====================================================== */
+
+.advertisement-card {
+min-height: 390px;
+
+position: relative;
+overflow: hidden;
+
+border-radius: 18px;
+
+background: linear-gradient(
+    135deg,
+    #fff3d6,
+    #ffe0a3
+);
+
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+text-align: center;
+
+box-sizing: border-box;
+
+}
+
+.ad-content {
+padding: 45px;
+
+max-width: 420px;
+
+animation: adAppear 0.4s ease;
+
+}
+
+@keyframes adAppear {
+from {
+opacity: 0;
+transform: translateY(10px);
+}
+
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+}
+
+.ad-icon {
+font-size: 52px;
+margin-bottom: 10px;
+}
+
+.ad-label {
+display: inline-block;
+
+background: #222;
+color: #ffffff;
+
+padding: 6px 12px;
+
+border-radius: 20px;
+
+font-size: 11px;
+font-weight: 700;
+
+letter-spacing: 1px;
+
+margin-bottom: 12px;
+
+}
+
+.ad-content h2 {
+margin: 0;
+
+font-size: 34px;
+font-weight: 800;
+
+}
+
+.ad-content h3 {
+margin: 8px 0 12px;
+
+font-size: 24px;
+font-weight: 700;
+
+}
+
+.ad-content p {
+margin: 0 auto 24px;
+
+color: #555;
+
+font-size: 16px;
+line-height: 1.5;
+
+}
+
+/* ======================================================
+AD BUTTON
+====================================================== */
+
+.ad-button {
+border: none;
+
+background: #222;
+color: #ffffff;
+
+padding: 13px 28px;
+
+border-radius: 8px;
+
+font-size: 15px;
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+.ad-button {
+background: #000;
+transform: translateY(-2px);
+}
+
+/* ======================================================
+AD ARROWS
+====================================================== */
+
+.ad-arrow {
+position: absolute;
+
+top: 50%;
+
+transform: translateY(-50%);
+
+width: 38px;
+height: 38px;
+
+border: none;
+
+border-radius: 50%;
+
+background: rgba(255, 255, 255, 0.85);
+
+color: #222;
+
+font-size: 28px;
+line-height: 30px;
+
+cursor: pointer;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+.ad-arrow {
+background: #ffffff;
+
+transform:
+    translateY(-50%)
+    scale(1.08);
+
+}
+
+.ad-arrow-left {
+left: 15px;
+}
+
+.ad-arrow-right {
+right: 15px;
+}
+
+/* ======================================================
+AD DOTS
+====================================================== */
+
+.ad-dots {
+position: absolute;
+
+bottom: 18px;
+left: 50%;
+
+transform: translateX(-50%);
+
+display: flex;
+
+gap: 7px;
+
+}
+
+.ad-dot {
+width: 8px;
+height: 8px;
+
+border: none;
+padding: 0;
+
+border-radius: 50%;
+
+background: rgba(0, 0, 0, 0.25);
+
+cursor: pointer;
+
+transition: 0.2s;
+
+}
+
+.ad-dot.active {
+width: 24px;
+
+border-radius: 10px;
+
+background: #222;
+
+}
+
+/* ======================================================
+BENEFITS
+====================================================== */
+
+.benefits-section {
+max-width: 1250px;
+
+margin: 0 auto 60px;
+
+padding: 0 24px;
+
+display: grid;
+
+grid-template-columns: repeat(3, 1fr);
+
+gap: 20px;
+
+box-sizing: border-box;
+
+}
+
+.benefit-card {
+background: #ffffff;
+
+border-radius: 14px;
+
+padding: 22px;
+
+display: flex;
+
+align-items: center;
+
+gap: 16px;
+
+box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+
+border: 1px solid #eeeeee;
+
+transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+.benefit-card {
+transform: translateY(-2px);
+
+box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+
+}
+
+.benefit-icon {
+font-size: 32px;
+}
+
+.benefit-card h3 {
+margin: 0 0 5px;
+
+font-size: 17px;
+font-weight: 700;
+
+}
+
+.benefit-card p {
+margin: 0;
+
+color: #777;
+
+font-size: 13px;
+
+line-height: 1.4;
+
+}
+
+/* ======================================================
+RESPONSIVE - TABLET
+====================================================== */
+
+@media (max-width: 900px) {
+.user-home-container {
+grid-template-columns: 1fr;
+}
+
+.welcome-card,
+.advertisement-card {
+    min-height: 350px;
+}
+
+.benefits-section {
+    grid-template-columns: 1fr;
+}
+
+.user-home-header {
+    padding: 20px 24px;
+}
+
+}
+
+/* ======================================================
+RESPONSIVE - MOBILE
+====================================================== */
+
+@media (max-width: 600px) {
+.user-home-header {
+min-height: auto;
+
+    padding: 18px;
+
+    gap: 18px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+.user-home-header h1 {
+    font-size: 21px;
+}
+
+.user-home-header p {
+    font-size: 14px;
+}
+
+.btns {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    gap: 8px;
+}
+
+.btns button {
+    padding: 10px 15px;
+
+    font-size: 13px;
+}
+
+.logout-button {
+    padding: 10px 16px;
+
+    font-size: 13px;
+}
+
+.user-home-container {
+    margin: 30px auto;
+
+    padding: 0 15px;
+
+    gap: 20px;
+}
+
+.welcome-card {
+    min-height: 330px;
+
+    padding: 25px;
+}
+
+.welcome-card h2 {
+    font-size: 25px;
+}
+
+.welcome-card p {
+    font-size: 15px;
+}
+
+.ad-content {
+    padding: 30px;
+}
+
+.ad-content h2 {
+    font-size: 27px;
+}
+
+.ad-content h3 {
+    font-size: 20px;
+}
+
+.ad-content p {
+    font-size: 14px;
+}
+
+.benefits-section {
+    padding: 0 15px;
+}
+
+}

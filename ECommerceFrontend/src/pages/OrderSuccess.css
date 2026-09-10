@@ -1,0 +1,180 @@
+.order-success-page
+{
+min-height: 100vh;
+background: #f5f7fa;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 30px 20px;
+box-sizing: border-box;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.order-success-card
+{
+width: 100%;
+max-width: 520px;
+background: white;
+border-radius: 12px;
+padding: 45px;
+box-sizing: border-box;
+text-align: center;
+box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.success-icon
+{
+width: 75px;
+height: 75px;
+margin: 0 auto 22px;
+border-radius: 50%;
+background: #e8f7ee;
+color: #20a35a;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 42px;
+font-weight: 700;
+}
+
+.order-success-card h1
+{
+margin: 0;
+font-size: 27px;
+color: #222222;
+}
+
+.success-message
+{
+margin: 10px 0 30px;
+color: #777777;
+font-size: 14px;
+}
+
+.success-details
+{
+border: 1px solid #eeeeee;
+border-radius: 8px;
+overflow: hidden;
+text-align: left;
+}
+
+.success-row
+{
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 15px 18px;
+border-bottom: 1px solid #eeeeee;
+gap: 15px;
+}
+
+.success-row:last-child
+{
+border-bottom: none;
+}
+
+.success-row span
+{
+color: #777777;
+font-size: 13px;
+}
+
+.success-row strong
+{
+color: #333333;
+font-size: 13px;
+text-align: right;
+word-break: break-word;
+}
+
+.total-row
+{
+background: #fafafa;
+}
+
+.total-row strong
+{
+font-size: 18px;
+color: #222222;
+}
+
+.paid-status
+{
+margin: 22px auto;
+width: fit-content;
+padding: 9px 18px;
+border-radius: 20px;
+background: #e8f7ee;
+color: #168547;
+font-size: 13px;
+font-weight: 600;
+}
+
+.success-actions
+{
+display: flex;
+gap: 12px;
+margin-top: 25px;
+}
+
+.continue-shopping-button,
+.view-orders-button
+{
+flex: 1;
+height: 46px;
+border-radius: 6px;
+cursor: pointer;
+font-size: 14px;
+font-weight: 600;
+}
+
+.continue-shopping-button
+{
+border: none;
+background: #3399cc;
+color: white;
+}
+
+.continue-shopping-button:hover
+{
+background: #2788b8;
+}
+
+.view-orders-button
+{
+border: 1px solid #3399cc;
+background: white;
+color: #3399cc;
+}
+
+.view-orders-button:hover
+{
+background: #f0f8fc;
+}
+
+@media (max-width: 600px)
+{
+.order-success-card
+{
+padding: 30px 20px;
+}
+
+.success-actions
+{
+    flex-direction: column;
+}
+
+.success-row
+{
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.success-row strong
+{
+    text-align: left;
+}
+
+}
