@@ -2,6 +2,7 @@ using ECommerceBackend.DTOs.Order;
 using ECommerceBackend.Models;
 using ECommerceBackend.Repositories.Interfaces;
 using ECommerceBackend.Services.Interfaces;
+using System.Net.Mail;
 
 namespace ECommerceBackend.Services;
 
@@ -10,15 +11,18 @@ public class OrderService : IOrderService
 private readonly IOrderRepository _orderRepository;
 private readonly ICartRepository _cartRepository;
 private readonly IFakePaymentService _fakePaymentService;
+private readonly IEmailNotificationService _emailNotificationService;
 
 public OrderService(
     IOrderRepository orderRepository,
     ICartRepository cartRepository,
-    IFakePaymentService fakePaymentService)
+    IFakePaymentService fakePaymentService,
+    IEmailNotificationService emailNotificationService)
 {
     _orderRepository = orderRepository;
     _cartRepository = cartRepository;
     _fakePaymentService = fakePaymentService;
+    _emailNotificationService = emailNotificationService;
 }
 
 
@@ -365,6 +369,16 @@ public async Task<bool> VerifyPaymentAsync(
     await _cartRepository.ClearCartAsync(
         cart
     );
+
+    try
+    {
+        await _emailNotificationService.SendOrderConfirmationAsync(order);
+    }
+    catch (SmtpException ex)
+    {
+        Console.Error.WriteLine(
+            $"Order confirmation email failed for order {order.Id}: {ex.Message}");
+    }
 
     return true;
 }

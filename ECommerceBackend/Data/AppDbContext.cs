@@ -23,6 +23,8 @@ public DbSet<Order> Orders { get; set; }
 
 public DbSet<OrderItem> OrderItems { get; set; }
 
+public DbSet<WishlistItem> WishlistItems { get; set; }
+
 // ==================================================
 // Application Logs
 // ==================================================
@@ -114,6 +116,26 @@ protected override void OnModelCreating(
         .WithMany()
         .HasForeignKey(oi => oi.ProductId)
         .OnDelete(DeleteBehavior.Restrict);
+
+    modelBuilder.Entity<WishlistItem>()
+        .HasOne(item => item.User)
+        .WithMany()
+        .HasForeignKey(item => item.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    modelBuilder.Entity<WishlistItem>()
+        .HasOne(item => item.Product)
+        .WithMany()
+        .HasForeignKey(item => item.ProductId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    modelBuilder.Entity<WishlistItem>()
+        .HasIndex(item => new
+        {
+            item.UserId,
+            item.ProductId
+        })
+        .IsUnique();
 
 
     // ==================================================

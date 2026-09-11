@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {toast} from "react-hot-toast"
 import {
     useNavigate
 } from "react-router-dom";
 
 import axios from "axios";
+import { loginWithGoogle } from "../services/authService";
 
 function Login()
 {
@@ -25,6 +26,68 @@ function Login()
 
     const [showPassword, setShowPassword] =
         useState(false);
+
+    const googleButtonRef = useRef(null);
+    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+    useEffect(() => {
+        if (!googleClientId || !googleButtonRef.current) {
+            return undefined;
+        }
+
+        const renderGoogleButton = () => {
+            if (!window.google?.accounts?.id || !googleButtonRef.current) {
+                return;
+            }
+
+            window.google.accounts.id.initialize({
+                client_id: googleClientId,
+                callback: async (response) => {
+                    setError("");
+                    setLoading(true);
+
+                    try {
+                        const data = await loginWithGoogle(response.credential);
+
+                        localStorage.setItem("token", data.token);
+                        localStorage.setItem("user", JSON.stringify(data));
+
+                        const role = String(data.role || "").toLowerCase();
+                        navigate(role === "admin" ? "/admin" : "/user", {
+                            replace: true
+                        });
+                    } catch (googleError) {
+                        console.error("Google login error:", googleError);
+                        setError(googleError.message || "Google login failed.");
+                    } finally {
+                        setLoading(false);
+                    }
+                }
+            });
+
+            googleButtonRef.current.innerHTML = "";
+            window.google.accounts.id.renderButton(googleButtonRef.current, {
+                theme: "outline",
+                size: "large",
+                width: 350,
+                text: "signin_with"
+            });
+        };
+
+        if (window.google?.accounts?.id) {
+            renderGoogleButton();
+            return undefined;
+        }
+
+        const script = document.querySelector(
+            'script[src="https://accounts.google.com/gsi/client"]'
+        );
+        script?.addEventListener("load", renderGoogleButton);
+
+        return () => {
+            script?.removeEventListener("load", renderGoogleButton);
+        };
+    }, [googleClientId, navigate]);
 
 
     // ======================================================
@@ -474,6 +537,19 @@ function Login()
                         </button>
 
                     </form>
+
+                    {googleClientId && (
+                        <>
+                            <div className="login-divider">
+                                <span>or continue with</span>
+                            </div>
+
+                            <div
+                                ref={googleButtonRef}
+                                className="google-login-button"
+                            ></div>
+                        </>
+                    )}
 
 
                     {/* ==================================================

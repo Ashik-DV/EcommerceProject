@@ -7,6 +7,15 @@ getProductFilterOptions,
 deleteProduct
 } from "../services/productService";
 import { addToCart } from "../services/cartService";
+import {
+addToWishlist,
+getWishlist,
+removeFromWishlist
+} from "../services/wishlistService";
+import {
+    getImageUrl,
+    IMAGE_FALLBACK
+} from "../utils/imageUrl";
 
 function Products()
 {
@@ -17,6 +26,8 @@ const [loading, setLoading] = useState(true);
 const [error, setError] = useState("");
 const [cartLoading, setCartLoading] = useState(null);
 const [buyLoading, setBuyLoading] = useState(null);
+const [wishlistIds, setWishlistIds] = useState([]);
+const [wishlistLoading, setWishlistLoading] = useState(null);
 const [quantities, setQuantities] = useState({});
 
 const [searchText, setSearchText] = useState("");
@@ -133,6 +144,29 @@ useEffect(() =>
 {
     loadFilterOptions();
 }, []);
+
+useEffect(() =>
+{
+    if (isAdmin)
+    {
+        return;
+    }
+
+    const loadWishlist = async () =>
+    {
+        try
+        {
+            const items = await getWishlist();
+            setWishlistIds(items.map(item => item.productId));
+        }
+        catch (err)
+        {
+            console.error("Unable to load wishlist", err);
+        }
+    };
+
+    loadWishlist();
+}, [isAdmin]);
 
 useEffect(() =>
 {
@@ -392,6 +426,40 @@ const handleBuyNow = async (product) =>
     }
 };
 
+const handleWishlistToggle = async (product) =>
+{
+    try
+    {
+        setWishlistLoading(product.id);
+
+        if (wishlistIds.includes(product.id))
+        {
+            await removeFromWishlist(product.id);
+            setWishlistIds(previous =>
+                previous.filter(id => id !== product.id)
+            );
+            toast.success("Removed from wishlist.");
+        }
+        else
+        {
+            await addToWishlist(product.id);
+            setWishlistIds(previous => [...previous, product.id]);
+            toast.success("Added to wishlist.");
+        }
+    }
+    catch (err)
+    {
+        toast.error(
+            err.response?.data?.message ||
+            "Unable to update wishlist."
+        );
+    }
+    finally
+    {
+        setWishlistLoading(null);
+    }
+};
+
 /*
  * Creates compact pagination.
  *
@@ -567,6 +635,16 @@ return (
                     >
                         🛒 View Cart
                     </button>
+
+                    {!isAdmin && (
+                        <button
+                            type="button"
+                            className="cart-header-button"
+                            onClick={() => navigate("/wishlist")}
+                        >
+                            ♡ Wishlist
+                        </button>
+                    )}
 
                     {isAdmin && (
                         <>
@@ -915,14 +993,19 @@ return (
 
                                     <div className="product-image">
 
-                                        {product.imageUrl ? (
+                                        {getImageUrl(product.imageUrl) ? (
                                             <img
                                                 src={
-                                                    product.imageUrl
+                                                    getImageUrl(product.imageUrl)
                                                 }
                                                 alt={
                                                     product.name
                                                 }
+                                                onError={(event) =>
+                                                {
+                                                    event.currentTarget.onerror = null;
+                                                    event.currentTarget.src = IMAGE_FALLBACK;
+                                                }}
                                             />
                                         ) : (
                                             <span>
@@ -933,6 +1016,18 @@ return (
                                     </div>
 
                                     <div className="product-content">
+
+                                        {!isAdmin && (
+                                            <button
+                                                type="button"
+                                                className={`wishlist-toggle ${wishlistIds.includes(product.id) ? "active" : ""}`}
+                                                onClick={() => handleWishlistToggle(product)}
+                                                disabled={wishlistLoading === product.id}
+                                                aria-label={wishlistIds.includes(product.id) ? "Remove from wishlist" : "Add to wishlist"}
+                                            >
+                                                {wishlistIds.includes(product.id) ? "♥" : "♡"}
+                                            </button>
+                                        )}
 
                                         <h2>
                                             {product.name}

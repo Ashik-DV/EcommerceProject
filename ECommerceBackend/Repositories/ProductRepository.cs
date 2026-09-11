@@ -248,6 +248,16 @@ public async Task<bool> DeleteAsync(int id)
         _context.OrderItems.RemoveRange(orderItems);
     }
 
+    var wishlistItems =
+        await _context.WishlistItems
+            .Where(item => item.ProductId == id)
+            .ToListAsync();
+
+    if (wishlistItems.Count > 0)
+    {
+        _context.WishlistItems.RemoveRange(wishlistItems);
+    }
+
     _context.Products.Remove(product);
 
     await _context.SaveChangesAsync();

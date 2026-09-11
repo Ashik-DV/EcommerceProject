@@ -7,6 +7,10 @@ updateCartItem,
 removeCartItem,
 clearCart
 } from "../services/cartService";
+import {
+getImageUrl,
+IMAGE_FALLBACK
+} from "../utils/imageUrl";
 
 function Cart()
 {
@@ -419,15 +423,20 @@ return (
                                     <div className="cart-product-image">
 
                                         {
-                                            item.imageUrl
+                                            getImageUrl(item.imageUrl)
                                                 ? (
                                                     <img
                                                         src={
-                                                            item.imageUrl
+                                                            getImageUrl(item.imageUrl)
                                                         }
                                                         alt={
                                                             item.productName
                                                         }
+                                                        onError={(event) =>
+                                                        {
+                                                            event.currentTarget.onerror = null;
+                                                            event.currentTarget.src = IMAGE_FALLBACK;
+                                                        }}
                                                     />
                                                 )
                                                 : (

@@ -41,6 +41,15 @@ from "./pages/Payment";
 import OrderSuccess
 from "./pages/OrderSuccess";
 
+import Orders
+from "./pages/Orders";
+
+import OrderDetails
+from "./pages/OrderDetails";
+
+import Wishlist
+from "./pages/Wishlist";
+
 import ProtectedRoute
 from "./components/ProtectedRoute";
 
@@ -208,6 +217,33 @@ return (
                 element={
                     <ProtectedRoute>
                         <OrderSuccess />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/orders"
+                element={
+                    <ProtectedRoute>
+                        <Orders />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/orders/:id"
+                element={
+                    <ProtectedRoute>
+                        <OrderDetails />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/wishlist"
+                element={
+                    <ProtectedRoute>
+                        <Wishlist />
                     </ProtectedRoute>
                 }
             />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
+import "./Register.css";
 
 function Register() {
 
@@ -174,12 +175,13 @@ function Register() {
 
 
     return (
-        <div className="auth-page">
+        <div className="register-page">
 
-            <div className="auth-card">
+            <div className="register-card">
 
-                <div className="auth-header">
+                <div className="register-header">
 
+                    <div className="register-icon">🛍️</div>
                     <h1>Create Account</h1>
 
                     <p>
@@ -203,15 +205,16 @@ function Register() {
                 )}
 
 
-                <form onSubmit={handleRegister}>
+                <form className="register-form" onSubmit={handleRegister}>
 
                     {/* NAME */}
 
                     <div className="form-group">
 
-                        <label>Name</label>
+                        <label htmlFor="register-name">Name</label>
 
                         <input
+                            id="register-name"
                             type="text"
                             name="name"
                             placeholder="Enter your name"
@@ -232,9 +235,10 @@ function Register() {
 
                     <div className="form-group">
 
-                        <label>Email</label>
+                        <label htmlFor="register-email">Email</label>
 
                         <input
+                            id="register-email"
                             type="email"
                             name="email"
                             placeholder="Enter your email"
@@ -255,9 +259,10 @@ function Register() {
 
                     <div className="form-group">
 
-                        <label>Password</label>
+                        <label htmlFor="register-password">Password</label>
 
                         <input
+                            id="register-password"
                             type="password"
                             name="password"
                             placeholder="Create a password"
@@ -278,9 +283,10 @@ function Register() {
 
                     <div className="form-group">
 
-                        <label>Confirm Password</label>
+                        <label htmlFor="register-confirm-password">Confirm Password</label>
 
                         <input
+                            id="register-confirm-password"
                             type="password"
                             name="confirmPassword"
                             placeholder="Confirm your password"
@@ -299,7 +305,7 @@ function Register() {
 
                     <button
                         type="submit"
-                        className="primary-button"
+                        className="register-submit-button"
                         disabled={loading}
                     >
 
@@ -312,14 +318,15 @@ function Register() {
                 </form>
 
 
-                <div className="auth-footer">
+                <div className="register-footer">
 
                     <p>
                         Already have an account?
                     </p>
 
                     <button
-                        className="link-button"
+                        type="button"
+                        className="register-login-button"
                         onClick={() =>
                             navigate("/login")
                         }

@@ -51,6 +51,7 @@ public async Task<List<Order>> GetByUserIdAsync(
 {
     var orders =
         _context.Orders
+            .Include(o => o.User)
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
             .Where(o => o.UserId == userId)
@@ -70,6 +71,7 @@ public async Task<Order?> GetByIdAsync(
 {
     var order =
         _context.Orders
+            .Include(o => o.User)
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
             .FirstOrDefaultAsync(
@@ -89,6 +91,7 @@ public async Task<List<Order>> GetAllAsync()
 {
     var orders =
         _context.Orders
+            .Include(o => o.User)
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
             .OrderByDescending(o => o.Id)
@@ -106,6 +109,7 @@ public async Task<Order?> GetByIdForAdminAsync(
 {
     var order =
         _context.Orders
+            .Include(o => o.User)
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
             .FirstOrDefaultAsync(

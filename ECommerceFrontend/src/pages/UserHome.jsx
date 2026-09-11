@@ -104,11 +104,25 @@ return (
             <button
                 type="button"
                 className="logout-button"
-              onClick={()=>{
-                 navigate("/about")
-              }}
+                onClick={() => navigate("/about")}
             >
                 ABOUT
+            </button>
+
+            <button
+                type="button"
+                className="logout-button"
+                onClick={() => navigate("/orders")}
+            >
+                MY ORDERS
+            </button>
+
+            <button
+                type="button"
+                className="logout-button"
+                onClick={() => navigate("/wishlist")}
+            >
+                WISHLIST
             </button>
                 
             <button

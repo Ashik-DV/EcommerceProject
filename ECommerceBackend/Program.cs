@@ -9,6 +9,7 @@ using ECommerceBackend.Services;
 using ECommerceBackend.Services.Interfaces;
 using ECommerceBackend.Logging;
 using ECommerceBackend.Middleware;
+using ECommerceBackend.Email;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,9 @@ builder.Logging.AddConsole();
 
 builder.Services.Configure<LoggingSettings>(
 builder.Configuration.GetSection("LoggingSettings"));
+
+builder.Services.Configure<EmailSettings>(
+builder.Configuration.GetSection("EmailSettings"));
 
 var loggingProvider =
 builder.Configuration
@@ -244,6 +248,14 @@ builder.Services.AddScoped<
 IProductService,
 ProductService>();
 
+builder.Services.AddScoped<
+IWishlistRepository,
+WishlistRepository>();
+
+builder.Services.AddScoped<
+IWishlistService,
+WishlistService>();
+
 // ------------------------------------------------------
 // Cart Repository
 // ------------------------------------------------------
@@ -275,6 +287,10 @@ OrderRepository>();
 builder.Services.AddScoped<
 IOrderService,
 OrderService>();
+
+builder.Services.AddScoped<
+IEmailNotificationService,
+EmailNotificationService>();
 
 // ------------------------------------------------------
 // Fake Payment Service

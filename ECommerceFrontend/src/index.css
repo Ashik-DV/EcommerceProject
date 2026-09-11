@@ -374,6 +374,120 @@ input {
     margin: auto;
 }
 
+.wishlist-toggle {
+    float: right;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.wishlist-toggle.active {
+    color: #e11d48;
+}
+
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.wishlist-card {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 18px;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+}
+
+.wishlist-image {
+    min-height: 150px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #9ca3af;
+    text-align: center;
+}
+
+.wishlist-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wishlist-content h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.wishlist-content p {
+    margin: 0 0 12px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.wishlist-content strong {
+    display: block;
+    font-size: 18px;
+}
+
+.wishlist-stock {
+    display: block;
+    margin-top: 6px;
+    color: #168547;
+    font-size: 13px;
+}
+
+.wishlist-stock.out {
+    color: #b91c1c;
+}
+
+.wishlist-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.wishlist-actions button {
+    border: none;
+    border-radius: 6px;
+    background: #222;
+    color: white;
+    padding: 9px 11px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.wishlist-actions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.wishlist-actions .wishlist-remove {
+    border: 1px solid #e5e7eb;
+    background: white;
+    color: #b91c1c;
+}
+
+@media (max-width: 750px) {
+    .wishlist-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .wishlist-card {
+        grid-template-columns: 1fr;
+    }
+}
+
 .products-header {
     display: flex;
 
@@ -469,7 +583,11 @@ input {
 
     height: 100%;
 
-    object-fit: cover;
+    object-fit: contain;
+
+    padding: 12px;
+
+    box-sizing: border-box;
 }
 
 
@@ -2962,6 +3080,33 @@ padding: 25px 18px;
     transform: none;
 }
 
+/* ======================================================
+   GOOGLE LOGIN
+   ====================================================== */
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 16px;
+    color: #8b93a8;
+    font-size: 13px;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e1e4ee;
+}
+
+.google-login-button {
+    display: flex;
+    justify-content: center;
+    min-height: 40px;
+}
+
 
 /* ======================================================
    REGISTER FOOTER
@@ -3178,7 +3323,6 @@ padding: 25px 18px;
         display: none;
     }
 }
- */
 
 
  /* ======================================================

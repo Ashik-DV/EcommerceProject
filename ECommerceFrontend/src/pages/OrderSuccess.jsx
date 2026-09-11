@@ -156,10 +156,10 @@ return (
                     type="button"
                     className="view-orders-button"
                     onClick={() =>
-                        navigate("/user")
+                        navigate("/orders")
                     }
                 >
-                    Go to Home
+                    View My Orders
                 </button>
 
             </div>
@@ -172,4 +172,3 @@ return (
 }
 
 export default OrderSuccess;
-

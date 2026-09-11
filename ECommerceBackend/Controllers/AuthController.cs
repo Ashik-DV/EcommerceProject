@@ -62,4 +62,27 @@ public async Task<IActionResult> Login(LoginDto dto)
     }
 }
 
+// ======================================================
+// GOOGLE LOGIN
+// POST: /api/Auth/google
+// ======================================================
+
+[HttpPost("google")]
+public async Task<IActionResult> GoogleLogin(GoogleLoginDto dto)
+{
+    try
+    {
+        var result = await _authService.GoogleLoginAsync(dto);
+
+        return Ok(result);
+    }
+    catch (Exception ex)
+    {
+        return Unauthorized(new
+        {
+            message = ex.Message
+        });
+    }
+}
+
 }
